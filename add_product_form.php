@@ -1,11 +1,13 @@
 <?php
 require('database.php');
+
 $query = 'SELECT *
-          FROM categories
-          ORDER BY categoryID';
+          FROM Game
+          ORDER BY GameID';
+
 $statement = $db->prepare($query);
 $statement->execute();
-$categories = $statement->fetchAll();
+$games = $statement->fetchAll();
 $statement->closeCursor();
 ?>
 <!DOCTYPE html>
@@ -13,45 +15,38 @@ $statement->closeCursor();
 
 <!-- the head section -->
 <head>
-    <title>My Guitar Shop</title>
+    <title>Game Manager</title>
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 
 <!-- the body section -->
 <body>
-    <header><h1>Product Manager</h1></header>
+    <header><h1>Game Manager</h1></header>
 
     <main>
-        <h1>Add Product</h1>
-        <form action="add_product.php" method="post"
-              id="add_product_form">
+        <h1>Add Game</h1>
+        <form action="add_game.php" method="post" id="add_game_form">
 
-            <label>Category:</label>
-            <select name="category_id">
-            <?php foreach ($categories as $category) : ?>
-                <option value="<?php echo $category['categoryID']; ?>">
-                    <?php echo $category['categoryName']; ?>
-                </option>
-            <?php endforeach; ?>
-            </select><br>
+            <label>Game ID:</label>
+            <input type="text" name="game_id"><br>
 
-            <label>Code:</label>
-            <input type="text" name="code"><br>
+            <label>Game Name:</label>
+            <input type="text" name="game_name"><br>
 
-            <label>Name:</label>
-            <input type="text" name="name"><br>
+            <label>Date Released:</label>
+            <input type="text" name="date_released"><br>
 
-            <label>List Price:</label>
-            <input type="text" name="price"><br>
+            <label>Game Cost:</label>
+            <input type="text" name="game_cost"><br>
 
             <label>&nbsp;</label>
-            <input type="submit" value="Add Product"><br>
+            <input type="submit" value="Add Game"><br>
         </form>
-        <p><a href="index.php">View Product List</a></p>
+        <p><a href="game_list.php">View Game List</a></p>
     </main>
 
     <footer>
-        <p>&copy; <?php echo date("Y"); ?> My Guitar Shop, Inc.</p>
+        <p>&copy; <?php echo date("Y"); ?> Game Inc.</p>
     </footer>
 </body>
 </html>
