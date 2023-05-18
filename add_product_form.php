@@ -25,7 +25,15 @@ $statement->closeCursor();
 
     <main>
         <h1>Add Game</h1>
-        <form action="add_game.php" method="post" id="add_game_form">
+        <form action="add_product.php" method="post" id="add_product_form">
+            <label>Add game to Player:</label>
+            <select name="player_id">
+            <?php foreach($beta_tester as $betaP) : ?>
+                <option value="<?php echo $betaP['PlayerID']; ?>">
+                <?php echo $player['PlayerFname'].''.['PlayerLname']; ?>
+            </option>
+            <?php endforeach;?>
+            </select><br>     
 
             <label>Game ID:</label>
             <input type="text" name="game_id"><br>
@@ -42,7 +50,7 @@ $statement->closeCursor();
             <label>&nbsp;</label>
             <input type="submit" value="Add Game"><br>
         </form>
-        <p><a href="game_list.php">View Game List</a></p>
+        <p><a href="index.php">View Game List</a></p>
     </main>
 
     <footer>
