@@ -1,0 +1,87 @@
+CREATE TABLE `Beta_Tester` (
+  `PlayerID` int,
+  `PlayerFname` varchar(45),
+  `PlayerLname` varchar(45),
+  `Street1` varchar(45),
+  `Street2` varchar(45),
+  `ZipCode` int,
+  `State` char(2),
+  PRIMARY KEY (`PlayerID`)
+);
+
+CREATE TABLE `Game` (
+  `GameID` int,
+  `Gamename` varchar(45),
+  `Date_of_Realease` date,
+  `GameCost` int,
+  PRIMARY KEY (`GameID`)
+);
+
+CREATE TABLE `Company` (
+  `CompanyID` int,
+  `CompanyName` varchar(45),
+  `Street1` varchar(45),
+  `Street2` varchar(45),
+  `ZipCode` int,
+  `State` char(2),
+  PRIMARY KEY (`CompanyID`)
+);
+
+CREATE TABLE `Payment` (
+  `PaymentID` int,
+  `GameID` int,
+  `PlayerID` int,
+  PRIMARY KEY (`PaymentID`, `GameID`, `PlayerID`)
+);
+INSERT INTO Beta_Tester(PlayerID, PlayerFname, PlayerLname, Street1, Street2, ZipCode, State)
+VALUES (1, 'Luffy', 'Monkey', 'One Piece Lane', 'Foosha Vil', 10000,'OP')
+      ,(2, 'Tobi', 'Tevoedjre', '20003 left st', '', 65442,'NE')
+      ,(3, 'Kazuto', 'Kirigaya', 'Kirigaya st', '',223432,'KK')
+      ,(4, '');
+Select * 
+from Beta_Tester;
+
+CREATE TABLE `Beta_Tester` (
+  `PlayerID` int,
+  `PlayerFname` varchar(45),
+  `PlayerLname` varchar(45),
+  `Street1` varchar(45),
+  `Street2` varchar(45),
+  `ZipCode` int,
+  `State` char(2),
+  PRIMARY KEY (`PlayerID`)
+);
+
+CREATE TABLE `Game` (
+  `GameID` int,
+  `Gamename` varchar(45),
+  `Date_of_Realease` date,
+  `GameCost` int,
+  PRIMARY KEY (`GameID`)
+);
+
+CREATE TABLE `Company` (
+  `CompanyID` int,
+  `CompanyName` varchar(45),
+  `Street1` varchar(45),
+  `Street2` varchar(45),
+  `ZipCode` int,
+  `State` char(2),
+  PRIMARY KEY (`CompanyID`)
+);
+
+CREATE TABLE `Payment` (
+  `PaymentID` int,
+  `GameID` int,
+  `PlayerID` int,
+  PRIMARY KEY (`PaymentID`, `GameID`, `PlayerID`)
+);
+INSERT INTO Beta_Tester(PlayerID, PlayerFname, PlayerLname, Street1, Street2, ZipCode, State)
+VALUES (1, 'Luffy', 'Monkey', 'One Piece Lane', 'Foosha Vil', 10000,'OP')
+      ,(2, 'Tobi', 'Tevoedjre', '20003 left st', '', 65442,'NE')
+      ,(3, 'Kazuto', 'Kirigaya', 'Kirigaya st', '',223432,'KK')
+      ,(4, '');
+Select * 
+from Beta_Tester;
+
+
