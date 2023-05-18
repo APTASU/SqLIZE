@@ -12,7 +12,7 @@ CREATE TABLE `Beta_Tester` (
 CREATE TABLE `Game` (
   `GameID` int,
   `Gamename` varchar(45),
-  `Date` date,
+  `Date_Realeased` date,
   `GameCost` float,
   PRIMARY KEY (`GameID`)
 );
@@ -39,7 +39,7 @@ VALUES (1, 'Luffy', 'Monkey', 'One Piece Lane', 'Foosha Vil', 10000,'OP')
       ,(3, 'Kazuto', 'Kirigaya', 'Kirigaya st', '',22343,'KK')
       ,(4, 'Gilgimish', '', 'Holy Grail st', '', 78237, 'HG')
       ,(5, 'Ichigo', 'Kurosaki', 'Soul Society st', '', 11022,'SS');
-INSERT INTO Game(GameID, Gamename, Date, GameCost)
+INSERT INTO Game(GameID, Gamename, Date_Realeased, GameCost)
 VALUES (1, 'Sword Art Online', 20221106, 800)
       ,(2, 'Tetris', 19840606, 9.79)
       ,(3, 'Fortnite', 20170721, 0.00)
