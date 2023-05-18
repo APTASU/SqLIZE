@@ -1,12 +1,12 @@
 <?php
 require_once('database.php');
 
-// Get all categories
-$query = 'SELECT * FROM categories
-                       ORDER BY categoryID';
+// Get all games
+$query = 'SELECT * FROM Game
+          ORDER BY GameID';
 $statement = $db->prepare($query);
 $statement->execute();
-$categories = $statement->fetchAll();
+$games = $statement->fetchAll();
 $statement->closeCursor();
 ?>
 <!DOCTYPE html>
@@ -14,27 +14,31 @@ $statement->closeCursor();
 
 <!-- the head section -->
 <head>
-    <title>My Guitar Shop</title>
+    <title>My Game Shop</title>
     <link rel="stylesheet" type="text/css" href="main.css" />
 </head>
 
 <!-- the body section -->
 <body>
-<header><h1>Product Manager</h1></header>
+<header><h1>Game Manager</h1></header>
 <main>
-    <h1>Category List</h1>
+    <h1>Game List</h1>
     <table>
         <tr>
             <th>Name</th>
+            <th>Date Released</th>
+            <th>Cost</th>
             <th>&nbsp;</th>
         </tr>        
-        <?php foreach ($categories as $category) : ?>
+        <?php foreach ($games as $game) : ?>
         <tr>
-            <td><?php echo $category['categoryName']; ?></td>
+            <td><?php echo $game['Gamename']; ?></td>
+            <td><?php echo $game['Date_Realeased']; ?></td>
+            <td><?php echo $game['GameCost']; ?></td>
             <td>
-                <form action="delete_category.php" method="post">
-                    <input type="hidden" name="category_id"
-                           value="<?php echo $category['categoryID']; ?>"/>
+                <form action="delete_game.php" method="post">
+                    <input type="hidden" name="game_id"
+                           value="<?php echo $game['GameID']; ?>"/>
                     <input type="submit" value="Delete"/>
                 </form>
             </td>
@@ -42,20 +46,30 @@ $statement->closeCursor();
         <?php endforeach; ?>    
     </table>
 
-    <h2 class="margin_top_increase">Add Category</h2>
-    <form action="add_category.php" method="post"
-          id="add_category_form">
+    <h2 class="margin_top_increase">Add Game</h2>
+    <form action="add_game.php" method="post"
+          id="add_game_form">
 
         <label>Name:</label>
         <input type="text" name="name" />
-        <input id="add_category_button" type="submit" value="Add"/>
+        <br>
+
+        <label>Date Released:</label>
+        <input type="text" name="date_released" />
+        <br>
+
+        <label>Cost:</label>
+        <input type="text" name="cost" />
+        <br>
+
+        <input id="add_game_button" type="submit" value="Add"/>
     </form>
     
     <p><a href="index.php">List Products</a></p>
 
 </main>
 <footer>
-    <p>&copy; <?php echo date("Y"); ?> My Guitar Shop, Inc.</p>
+    <p>&copy; <?php echo date("Y"); ?> My Game Shop, Inc.</p>
 </footer>
 </body>
 </html>
