@@ -12,7 +12,7 @@ CREATE TABLE `Beta_Tester` (
 CREATE TABLE `Game` (
   `GameID` int,
   `Gamename` varchar(45),
-  `Date_of_Realease` date,
+  `Date` date,
   `GameCost` int,
   PRIMARY KEY (`GameID`)
 );
@@ -36,52 +36,21 @@ CREATE TABLE `Payment` (
 INSERT INTO Beta_Tester(PlayerID, PlayerFname, PlayerLname, Street1, Street2, ZipCode, State)
 VALUES (1, 'Luffy', 'Monkey', 'One Piece Lane', 'Foosha Vil', 10000,'OP')
       ,(2, 'Tobi', 'Tevoedjre', '20003 left st', '', 65442,'NE')
-      ,(3, 'Kazuto', 'Kirigaya', 'Kirigaya st', '',223432,'KK')
-      ,(4, '');
+      ,(3, 'Kazuto', 'Kirigaya', 'Kirigaya st', '',22343,'KK')
+      ,(4, 'Gilgimish', '', 'Holy Grail st', '', 78237, 'HG')
+      ,(5, 'Ichigo', 'Kurosaki', 'Soul Society st', '', 11022,'SS');
+INSERT INTO Game(GameID, Gamename, Date, GameCost)
+VALUES (1, 'Sword Art Online', 20221106, 800)
+      ,(2, 'Tetris', 19840606, 9.79)
+      ,(3, 'Fortnite', 20170721, 0.00)
+      ,(4, 'Halo: Combat Evolved', 20011115, 49.99)
+      ,(5, 'Marvel's Spider-Man', 20180907, 49.99)
+INSERT INTO Company(CompanyID, CompanyName, Street1, Street2, ZipCode, State)
+VALUES (1, 'Sony', '2207 Bridgepoint Pkwy, Foster City', 'Suite 100', '94404', 'CA')
+      ,(2, 'Tetris Holding LLC', '9788 GILESPIE ST LAS VEGAS', 'Suit 418', '89183', 'NV')
+      ,(3, 'Epic Games', '620 Crossroads Blvd.,Cary', '', '27518', 'NC')
+      ,(4, 'Microsoft', 'Redmong', '', '', 'WA')
+      ,(5, 
+
 Select * 
 from Beta_Tester;
-
-CREATE TABLE `Beta_Tester` (
-  `PlayerID` int,
-  `PlayerFname` varchar(45),
-  `PlayerLname` varchar(45),
-  `Street1` varchar(45),
-  `Street2` varchar(45),
-  `ZipCode` int,
-  `State` char(2),
-  PRIMARY KEY (`PlayerID`)
-);
-
-CREATE TABLE `Game` (
-  `GameID` int,
-  `Gamename` varchar(45),
-  `Date_of_Realease` date,
-  `GameCost` int,
-  PRIMARY KEY (`GameID`)
-);
-
-CREATE TABLE `Company` (
-  `CompanyID` int,
-  `CompanyName` varchar(45),
-  `Street1` varchar(45),
-  `Street2` varchar(45),
-  `ZipCode` int,
-  `State` char(2),
-  PRIMARY KEY (`CompanyID`)
-);
-
-CREATE TABLE `Payment` (
-  `PaymentID` int,
-  `GameID` int,
-  `PlayerID` int,
-  PRIMARY KEY (`PaymentID`, `GameID`, `PlayerID`)
-);
-INSERT INTO Beta_Tester(PlayerID, PlayerFname, PlayerLname, Street1, Street2, ZipCode, State)
-VALUES (1, 'Luffy', 'Monkey', 'One Piece Lane', 'Foosha Vil', 10000,'OP')
-      ,(2, 'Tobi', 'Tevoedjre', '20003 left st', '', 65442,'NE')
-      ,(3, 'Kazuto', 'Kirigaya', 'Kirigaya st', '',223432,'KK')
-      ,(4, '');
-Select * 
-from Beta_Tester;
-
-
