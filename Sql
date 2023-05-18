@@ -13,7 +13,7 @@ CREATE TABLE `Game` (
   `GameID` int,
   `Gamename` varchar(45),
   `Date` date,
-  `GameCost` int,
+  `GameCost` float,
   PRIMARY KEY (`GameID`)
 );
 
