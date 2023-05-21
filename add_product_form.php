@@ -1,79 +1,65 @@
-<!-- add_player_form.php -->
+<?php
+require_once('database.php');
 
+$query = 'SELECT *
+          FROM Game
+          ORDER BY GameID';
+
+$statement = $db->prepare($query);
+$statement->execute();
+$games = $statement->fetchAll();
+$statement->closeCursor();
+?>
 <!DOCTYPE html>
 <html>
+<!-- the head section -->
 <head>
-    <title>Add Players</title>
+    <title>Game Manager</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
 </head>
+<!-- the body section -->
 <body>
-    <h2>Add Players</h2>
-    <form action="add_players.php" method="post">
-        <label for="game_id">Game ID:</label>
-        <input type="text" name="game_id" id="game_id" required>
-        <hr>
-        <h3>Players:</h3>
-        <div id="players-container">
-            <div class="player">
-                <label for="player_fname">First Name:</label>
-                <input type="text" name="player[0][player_fname]" required>
-                <br>
-                <label for="player_lname">Last Name:</label>
-                <input type="text" name="player[0][player_lname]" required>
-                <br>
-                <label for="street1">Street 1:</label>
-                <input type="text" name="player[0][street1]" required>
-                <br>
-                <label for="street2">Street 2:</label>
-                <input type="text" name="player[0][street2]">
-                <br>
-                <label for="zip_code">ZIP Code:</label>
-                <input type="text" name="player[0][zip_code]" required>
-                <br>
-                <label for="state">State:</label>
-                <input type="text" name="player[0][state]" required>
-                <hr>
-            </div>
-        </div>
-        <button type="button" onclick="addPlayer()">Add Player</button>
-        <br><br>
-        <input type="submit" value="Submit">
-    </form>
+    <header>
+        <h1>Game Manager</h1>
+    </header>
 
-    <script>
-        var playerCount = 1;
+    <main>
+        <h1>Add Player to Game</h1>
+        <form action="add_player.php" method="post" id="Add Player">
+            <label>Select a Game:</label>
+            <select name="game_id">
+                <?php foreach($games as $game) : ?>
+                    <option value="<?php echo $game['GameID']; ?>">
+                        <?php echo $game['Gamename']; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select><br>     
+            <label>Player First Name:</label>
+            <input type="text" name="player_fname"><br>
 
-        function addPlayer() {
-            var playerContainer = document.getElementById("players-container");
+            <label>Player Last Name:</label>
+            <input type="text" name="player_lname"><br>
 
-            var playerDiv = document.createElement("div");
-            playerDiv.classList.add("player");
+            <label>Street 1:</label>
+            <input type="text" name="street1"><br>
 
-            var playerHTML = `
-                <label for="player_fname">First Name:</label>
-                <input type="text" name="player[${playerCount}][player_fname]" required>
-                <br>
-                <label for="player_lname">Last Name:</label>
-                <input type="text" name="player[${playerCount}][player_lname]" required>
-                <br>
-                <label for="street1">Street 1:</label>
-                <input type="text" name="player[${playerCount}][street1]" required>
-                <br>
-                <label for="street2">Street 2:</label>
-                <input type="text" name="player[${playerCount}][street2]">
-                <br>
-                <label for="zip_code">ZIP Code:</label>
-                <input type="text" name="player[${playerCount}][zip_code]" required>
-                <br>
-                <label for="state">State:</label>
-                <input type="text" name="player[${playerCount}][state]" required>
-                <hr>
-            `;
+            <label>Street 2:</label>
+            <input type="text" name="street2"><br>
 
-            playerDiv.innerHTML = playerHTML;
-            playerContainer.appendChild(playerDiv);
+            <label>Zip Code:</label>
+            <input type="text" name="zip_code"><br>
 
-            playerCount++;
-        }
-    </script>
+            <label>State:</label>
+            <input type="text" name="state"><br>
+
+            <label>&nbsp;</label>
+            <input type="submit" value="Add Player"><br>
+        </form>
+        <p><a href="index.php">View Game List</a></p>
+    </main>
+
+    <footer>
+        <p>&copy; <?php echo date("Y"); ?> Game Inc.</p>
+    </footer>
 </body>
 </html>
