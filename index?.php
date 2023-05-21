@@ -115,7 +115,7 @@ if(isset($_GET['game_id'])){
                             input type="hidden" name="player_id"
                                 value="<?php echo $player['PlayerID']; ?>">
                             <input type="submit" value="Edit">
-                        <form>
+                </form>
                 </td>
                         <td>
                         <form action="delete_player.php" method="post">
