@@ -8,7 +8,6 @@ $zip_code = filter_input(INPUT_POST, 'zip_code');
 $state = filter_input(INPUT_POST, 'state');
 
 if (
-    $player_id == null ||
     $player_fname == null ||
     $player_lname == null ||
     $street1 == null ||
@@ -21,16 +20,29 @@ if (
     require_once('database.php');
 
     $query = 'UPDATE Beta_Tester
-    SET PlayerFname = :player_fname, PlayerLname = :player_lname, Street1 = :street1, Street2 = :street2, ZipCode = :zip_code, State = :state
-    WHERE PlayerID = :player_id';
+    SET PlayerFname = :player_fname, PlayerLname = :player_lname, Street1 = :street1, Street2 = :street2, ZipCode = :zip_code, State = :state';
+
+    // Add condition to include Player ID in the query only if it is set and valid
+    if ($player_id !== null && $player_id !== false) {
+        $query .= ', PlayerID = :player_id';
+    }
+
+    $query .= ' WHERE PlayerID = :player_id_existing';
+
     $statement = $db->prepare($query);
-    $statement->bindValue(':player_id', $player_id);
     $statement->bindValue(':player_fname', $player_fname);
     $statement->bindValue(':player_lname', $player_lname);
     $statement->bindValue(':street1', $street1);
     $statement->bindValue(':street2', $street2);
     $statement->bindValue(':zip_code', $zip_code);
     $statement->bindValue(':state', $state);
+
+    // Bind the Player ID values based on whether it is editable or not
+    if ($player_id !== null && $player_id !== false) {
+        $statement->bindValue(':player_id', $player_id);
+    }
+    $statement->bindValue(':player_id_existing', $player_id);
+
     $statement->execute();
     $statement->closeCursor();
 
