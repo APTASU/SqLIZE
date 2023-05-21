@@ -9,6 +9,19 @@ if (!isset($player_id)) {
     }
 }
 
+// Delete the player from the database
+if (isset($_POST['player_id'])) {
+    $delete_player_id = filter_input(INPUT_POST, 'player_id', FILTER_VALIDATE_INT);
+
+    if ($delete_player_id !== NULL && $delete_player_id !== FALSE) {
+        $query = 'DELETE FROM Beta_Tester WHERE PlayerID = :player_id';
+        $delete_statement = $db->prepare($query);
+        $delete_statement->bindValue(':player_id', $delete_player_id);
+        $delete_statement->execute();
+        $delete_statement->closeCursor();
+    }
+}
+
 // Get name for selected player
 $queryPlayer = 'SELECT * FROM Beta_Tester WHERE PlayerID = :player_id';
 $statement1 = $db->prepare($queryPlayer);
@@ -25,7 +38,7 @@ $statement->execute();
 $games = $statement->fetchAll();
 $statement->closeCursor();
 
-if(isset($_GET['game_id'])){
+if (isset($_GET['game_id'])) {
     $game_id = $_GET['game_id'];
 
     $queryGame = 'SELECT Gamename FROM Game WHERE GameID = :game_id';
@@ -35,7 +48,6 @@ if(isset($_GET['game_id'])){
     $game = $statement2->fetch();
     $game_name = $game['Gamename'];
     $statement2->closeCursor();
-
 
     // Get players for selected game
     $queryPlayers = 'SELECT bt.* FROM Beta_Tester bt
@@ -59,7 +71,9 @@ if(isset($_GET['game_id'])){
 </head>
 <!-- the body section -->
 <body>
-    <header><h1>Game Manager</h1></header>
+    <header>
+        <h1>Game Manager</h1>
+    </header>
     <main>
         <h1>Game List</h1>
         <aside>
@@ -75,7 +89,7 @@ if(isset($_GET['game_id'])){
                         </li>
                     <?php endforeach; ?>
                 </ul>
-            </nav>          
+            </nav>
         </aside>
         <section>
             <?php if (isset($game_name)) : ?>
@@ -89,6 +103,7 @@ if(isset($_GET['game_id'])){
                     <th>City</th>
                     <th>Zip Code</th>
                     <th>State</th>
+                    <th></th>
                 </tr>
                 <?php foreach ($players as $player) : ?>
                     <tr>
@@ -99,12 +114,11 @@ if(isset($_GET['game_id'])){
                         <td><?php echo $player['ZipCode']; ?></td>
                         <td><?php echo $player['State']; ?></td>
                         <td>
-                        <form action="delete_player.php" method="post">
-                        <input type="hidden" name="player_id"
-                            value="<?php echo $player['PlayerID']; ?>">
-                        <input type="submit" value="Delete">
-                    </form>
-                </td>
+                            <form action="delete_player.php" method="post">
+                                <input type="hidden" name="player_id" value="<?php echo $player['PlayerID']; ?>">
+                                <input type="submit" value="Delete">
+                            </form>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </table>
@@ -112,7 +126,7 @@ if(isset($_GET['game_id'])){
             <?php else : ?>
                 <p>No game selected.</p>
             <?php endif; ?>
-            <p><a href="game_list.php">List Games</a></p>        
+            <p><a href="game_list.php">List Games</a></p>
         </section>
     </main>
     <footer>
