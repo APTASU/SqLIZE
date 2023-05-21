@@ -1,42 +1,24 @@
 <?php
-// Get the player data
-$playerID = filter_input(INPUT_POST, 'player_id');
-$playerFname = filter_input(INPUT_POST, 'player_fname');
-$playerLname = filter_input(INPUT_POST, 'player_lname');
-$street1 = filter_input(INPUT_POST, 'street1');
-$street2 = filter_input(INPUT_POST, 'street2');
-$zipCode = filter_input(INPUT_POST, 'zip_code');
-$state = filter_input(INPUT_POST, 'state');
+// Get the game data
+$gameID = filter_input(INPUT_POST, 'game_id');
+$gameName = filter_input(INPUT_POST, 'game_name');
 
 // Validate inputs
-if (
-    $playerID == null ||
-    $playerFname == null ||
-    $playerLname == null ||
-    $street1 == null ||
-    $zipCode == null ||
-    $state == null
-) {
-    $error = "Invalid player data. Check all fields and try again.";
+if ($gameID == null || $gameName == null) {
+    $error = "Invalid game data. Check all fields and try again.";
     include('error.php');
 } else {
     require_once('database.php');
 
-    // Add the player to the database
-    $query = 'INSERT INTO Beta_Tester (PlayerID, PlayerFname, PlayerLname, Street1, Street2, ZipCode, State)
-              VALUES (:player_id, :player_fname, :player_lname, :street1, :street2, :zip_code, :state)';
+    // Add the game to the database
+    $query = 'INSERT INTO Game (GameID, Gamename) VALUES (:game_id, :game_name)';
     $statement = $db->prepare($query);
-    $statement->bindValue(':player_id', $playerID);
-    $statement->bindValue(':player_fname', $playerFname);
-    $statement->bindValue(':player_lname', $playerLname);
-    $statement->bindValue(':street1', $street1);
-    $statement->bindValue(':street2', $street2);
-    $statement->bindValue(':zip_code', $zipCode);
-    $statement->bindValue(':state', $state);
+    $statement->bindValue(':game_id', $gameID);
+    $statement->bindValue(':game_name', $gameName);
     $statement->execute();
     $statement->closeCursor();
 
-    // Display the Player List page
-    include('player_list.php');
+    // Display the Game List page
+    include('game_list.php');
 }
 ?>
