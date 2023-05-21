@@ -1,23 +1,22 @@
 <?php
-// Get ID
-$category_id = filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT);
+// Get game ID
+$gameID = filter_input(INPUT_POST, 'game_id', FILTER_VALIDATE_INT);
 
 // Validate inputs
-if ($category_id == null || $category_id == false) {
-    $error = "Invalid category ID.";
+if ($gameID == null || $gameID == false) {
+    $error = "Invalid game ID.";
     include('error.php');
 } else {
     require_once('database.php');
 
-    // Add the product to the database  
-    $query = 'DELETE FROM categories 
-              WHERE categoryID = :category_id';
+    // Delete the game from the database
+    $query = 'DELETE FROM Game WHERE GameID = :game_id';
     $statement = $db->prepare($query);
-    $statement->bindValue(':category_id', $category_id);
+    $statement->bindValue(':game_id', $gameID);
     $statement->execute();
     $statement->closeCursor();
 
-    // Display the Category List page
-    include('category_list.php');
+    // Display the Game List page
+    include('game_list.php');
 }
 ?>
