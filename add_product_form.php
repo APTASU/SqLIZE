@@ -1,3 +1,15 @@
+<?php
+require_once('database.php');
+
+$query = 'SELECT *
+          FROM Game
+          ORDER BY GameID';
+
+$statement = $db->prepare($query);
+$statement->execute();
+$games = $statement->fetchAll();
+$statement->closeCursor();
+?>
 <!DOCTYPE html>
 <html>
 <!-- the head section -->
@@ -13,7 +25,7 @@
 
     <main>
         <h1>Add Player to Game</h1>
-        <form action="add_player.php" method="post" id="add_player_form">
+        <form action="index.php" method="post" id="Add Player">
             <label>Select a Game:</label>
             <select name="game_id">
                 <?php foreach($games as $game) : ?>
@@ -36,7 +48,7 @@
             <input type="text" name="street2"><br>
 
             <label>Zip Code:</label>
-            <input type="text" name="zip_code"><br>
+            <input type="text" name="zip_Code"><br>
 
             <label>State:</label>
             <input type="text" name="state"><br>
