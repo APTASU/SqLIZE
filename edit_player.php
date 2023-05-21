@@ -57,7 +57,7 @@ $statement->closeCursor();
 
             <input type="submit" value="Edit Player"><br>
         </form>
-        <p><a href="player_list.php">View Player List</a></p>
+        <p><a href="index.php">View Player List</a></p>
     </main>
 
     <footer>
