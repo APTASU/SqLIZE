@@ -1,34 +1,53 @@
 <?php
 // Get the game data
-$gameID = filter_input(INPUT_POST, 'game_id');
-$gameName = filter_input(INPUT_POST, 'game_name');
-$dateReleased = filter_input(INPUT_POST, 'date_released');
-$gameCost = filter_input(INPUT_POST, 'game_cost');
+$gameID = filter_input(INPUT_POST, 'game_id', FILTER_VALIDATE_INT);
+$playerFname = filter_input(INPUT_POST, 'player_fname');
+$playerLname = filter_input(INPUT_POST, 'player_lname');
+$street1 = filter_input(INPUT_POST, 'street1');
+$street2 = filter_input(INPUT_POST, 'street2');
+$zipCode = filter_input(INPUT_POST, 'zip_code');
+$state = filter_input(INPUT_POST, 'state');
 
 // Validate inputs
 if (
     $gameID == null ||
-    $gameName == null ||
-    $dateReleased == null ||
-    $gameCost == null
+    $playerFname == null ||
+    $playerLname == null ||
+    $street1 == null ||
+    $zipCode == null ||
+    $state == null
 ) {
-    $error = "Invalid game data. Check all fields and try again.";
+    $error = "Invalid player data. Check all fields and try again.";
     include('error.php');
 } else {
     require_once('database.php');
 
-    // Add the game to the database
-    $query = 'INSERT INTO Game (GameID, Gamename, Date_Realeased, GameCost)
-              VALUES (:game_id, :game_name, :date_released, :game_cost)';
+    // Add the player to the database
+    $query = 'INSERT INTO Beta_Tester (PlayerFname, PlayerLname, Street1, Street2, ZipCode, State)
+              VALUES (:player_fname, :player_lname, :street1, :street2, :zip_code, :state)';
     $statement = $db->prepare($query);
-    $statement->bindValue(':game_id', $gameID);
-    $statement->bindValue(':game_name', $gameName);
-    $statement->bindValue(':date_released', $dateReleased);
-    $statement->bindValue(':game_cost', $gameCost);
+    $statement->bindValue(':player_fname', $playerFname);
+    $statement->bindValue(':player_lname', $playerLname);
+    $statement->bindValue(':street1', $street1);
+    $statement->bindValue(':street2', $street2);
+    $statement->bindValue(':zip_code', $zipCode);
+    $statement->bindValue(':state', $state);
     $statement->execute();
     $statement->closeCursor();
 
-    // Display the Game List page
-    include('game_list.php');
+    // Get the newly added player's ID
+    $playerID = $db->lastInsertId();
+
+    // Add the player's payment for the game
+    $query = 'INSERT INTO Payment (PlayerID, GameID)
+              VALUES (:player_id, :game_id)';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':player_id', $playerID);
+    $statement->bindValue(':game_id', $gameID);
+    $statement->execute();
+    $statement->closeCursor();
+
+    // Redirect to the game details page
+    header("Location: game_details.php?game_id=$gameID");
 }
 ?>
