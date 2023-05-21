@@ -34,6 +34,6 @@ if (
     $statement->execute();
     $statement->closeCursor();
 
-    include('player_list.php');
+    include('index.php');
 }
 ?>
