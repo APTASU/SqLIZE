@@ -1,16 +1,3 @@
-<?php
-require_once('database.php');
-
-$query = 'SELECT *
-          FROM Beta_Tester
-          ORDER BY PlayerID';
-
-$statement = $db->prepare($query);
-$statement->execute();
-$players = $statement->fetchAll();
-$statement->closeCursor();
-?>
-
 <!DOCTYPE html>
 <html>
 <!-- the head section -->
@@ -25,31 +12,37 @@ $statement->closeCursor();
     </header>
 
     <main>
-        <h1>Add Game</h1>
+        <h1>Add Player to Game</h1>
         <form action="add_player.php" method="post" id="add_player_form">
-            <label>Add game to Player:</label>
-            <select name="player_id">
-                <?php foreach($players as $player) : ?>
-                    <option value="<?php echo $player['PlayerID']; ?>">
-                        <?php echo $player['PlayerFname'].' '.$player['PlayerLname']; ?>
+            <label>Select a Game:</label>
+            <select name="game_id">
+                <?php foreach($games as $game) : ?>
+                    <option value="<?php echo $game['GameID']; ?>">
+                        <?php echo $game['Gamename']; ?>
                     </option>
                 <?php endforeach; ?>
             </select><br>     
 
-            <label>Game ID:</label>
-            <input type="text" name="game_id"><br>
+            <label>Player First Name:</label>
+            <input type="text" name="player_fname"><br>
 
-            <label>Game Name:</label>
-            <input type="text" name="game_name"><br>
+            <label>Player Last Name:</label>
+            <input type="text" name="player_lname"><br>
 
-            <label>Date Released:</label>
-            <input type="text" name="date_released"><br>
+            <label>Street 1:</label>
+            <input type="text" name="street1"><br>
 
-            <label>Game Cost:</label>
-            <input type="text" name="game_cost"><br>
+            <label>Street 2:</label>
+            <input type="text" name="street2"><br>
+
+            <label>Zip Code:</label>
+            <input type="text" name="zip_code"><br>
+
+            <label>State:</label>
+            <input type="text" name="state"><br>
 
             <label>&nbsp;</label>
-            <input type="submit" value="Add Game"><br>
+            <input type="submit" value="Add Player"><br>
         </form>
         <p><a href="index.php">View Game List</a></p>
     </main>
