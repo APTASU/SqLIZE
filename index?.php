@@ -25,16 +25,29 @@ $statement->execute();
 $games = $statement->fetchAll();
 $statement->closeCursor();
 
-// Get players for selected game
-$queryPlayers = 'SELECT bt.* FROM Beta_Tester bt
-               INNER JOIN Payment p ON bt.PlayerID = p.PlayerID
-               WHERE p.GameID = :game_id
-               ORDER BY bt.PlayerID';
-$statement3 = $db->prepare($queryPlayers);
-$statement3->bindValue(':game_id', $game_id);
-$statement3->execute();
-$players = $statement3->fetchAll();
-$statement3->closeCursor();
+if(isset($_GET['game_id'])){
+    $game_id = $_GET['game_id'];
+
+    $queryGame = 'SELECT Gamename FROM Game WHERE GameID = :game_id';
+    $statement2 = $db->prepare($queryGame);
+    $statement2->bindValue(':game_id', $game_id);
+    $statement2->execute();
+    $game = $statement2->fetch();
+    $game_name = $game['Gamename'];
+    $statement2->closeCursor();
+
+
+    // Get players for selected game
+    $queryPlayers = 'SELECT bt.* FROM Beta_Tester bt
+                INNER JOIN Payment p ON bt.PlayerID = p.PlayerID
+                WHERE p.GameID = :game_id
+                ORDER BY bt.PlayerID';
+    $statement3 = $db->prepare($queryPlayers);
+    $statement3->bindValue(':game_id', $game_id);
+    $statement3->execute();
+    $players = $statement3->fetchAll();
+    $statement3->closeCursor();
+}
 ?>
 
 <!DOCTYPE html>
@@ -65,6 +78,7 @@ $statement3->closeCursor();
             </nav>          
         </aside>
         <section>
+            <?php if (isset($game_name)) : ?>
             <!-- display a table of players for selected game -->
             <h2><?php echo $game_name; ?></h2>
             <table>
@@ -88,6 +102,9 @@ $statement3->closeCursor();
                 <?php endforeach; ?>
             </table>
             <p><a href="add_player_form.php?game_id=<?php echo $game_id; ?>">Add Player</a></p>
+            <?php else : ?>
+                <p>No game selected.</p>
+            <?php endif; ?>
             <p><a href="game_list.php">List Games</a></p>        
         </section>
     </main>
