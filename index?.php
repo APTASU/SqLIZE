@@ -18,22 +18,22 @@ $player = $statement1->fetch();
 $player_name = $player['PlayerFname'] . ' ' . $player['PlayerLname'];
 $statement1->closeCursor();
 
-// Get all players
-$query = 'SELECT * FROM Beta_Tester ORDER BY PlayerID';
+// Get all games
+$query = 'SELECT * FROM Game ORDER BY GameID';
 $statement = $db->prepare($query);
 $statement->execute();
-$players = $statement->fetchAll();
+$games = $statement->fetchAll();
 $statement->closeCursor();
 
-// Get games for selected player
-$queryGames = 'SELECT g.* FROM Game g
-               INNER JOIN Payment p ON g.GameID = p.GameID
-               WHERE p.PlayerID = :player_id
-               ORDER BY g.GameID';
-$statement3 = $db->prepare($queryGames);
-$statement3->bindValue(':player_id', $player_id);
+// Get players for selected game
+$queryPlayers = 'SELECT bt.* FROM Beta_Tester bt
+               INNER JOIN Payment p ON bt.PlayerID = p.PlayerID
+               WHERE p.GameID = :game_id
+               ORDER BY bt.PlayerID';
+$statement3 = $db->prepare($queryPlayers);
+$statement3->bindValue(':game_id', $game_id);
 $statement3->execute();
-$games = $statement3->fetchAll();
+$players = $statement3->fetchAll();
 $statement3->closeCursor();
 ?>
 
@@ -48,16 +48,16 @@ $statement3->closeCursor();
 <body>
     <header><h1>Game Manager</h1></header>
     <main>
-        <h1>Player List</h1>
+        <h1>Game List</h1>
         <aside>
-            <!-- display a list of players -->
-            <h2>Players</h2>
+            <!-- display a list of games -->
+            <h2>Games</h2>
             <nav>
                 <ul>
-                    <?php foreach ($players as $player) : ?>
+                    <?php foreach ($games as $game) : ?>
                         <li>
-                            <a href=".?player_id=<?php echo $player['PlayerID']; ?>">
-                                <?php echo $player['PlayerFname'] . ' ' . $player['PlayerLname']; ?>
+                            <a href=".?game_id=<?php echo $game['GameID']; ?>">
+                                <?php echo $game['Gamename']; ?>
                             </a>
                         </li>
                     <?php endforeach; ?>
@@ -65,26 +65,30 @@ $statement3->closeCursor();
             </nav>          
         </aside>
         <section>
-            <!-- display a table of games for selected player -->
-            <h2><?php echo $player_name; ?></h2>
+            <!-- display a table of players for selected game -->
+            <h2><?php echo $game_name; ?></h2>
             <table>
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Date Released</th>
-                    <th>Cost</th>
+                    <th>Street</th>
+                    <th>City</th>
+                    <th>Zip Code</th>
+                    <th>State</th>
                 </tr>
-                <?php foreach ($games as $game) : ?>
+                <?php foreach ($players as $player) : ?>
                     <tr>
-                        <td><?php echo $game['GameID']; ?></td>
-                        <td><?php echo $game['Gamename']; ?></td>
-                        <td><?php echo $game['Date_Realeased']; ?></td>
-                        <td><?php echo $game['GameCost']; ?></td>
+                        <td><?php echo $player['PlayerID']; ?></td>
+                        <td><?php echo $player['PlayerFname'] . ' ' . $player['PlayerLname']; ?></td>
+                        <td><?php echo $player['Street1']; ?></td>
+                        <td><?php echo $player['Street2']; ?></td>
+                        <td><?php echo $player['ZipCode']; ?></td>
+                        <td><?php echo $player['State']; ?></td>
                     </tr>
                 <?php endforeach; ?>
             </table>
-            <p><a href="add_game_form.php?player_id=<?php echo $player_id; ?>">Add Game</a></p>
-            <p><a href="player_list.php">List Players</a></p>        
+            <p><a href="add_player_form.php?game_id=<?php echo $game_id; ?>">Add Player</a></p>
+            <p><a href="game_list.php">List Games</a></p>        
         </section>
     </main>
     <footer>
