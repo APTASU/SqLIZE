@@ -1,38 +1,39 @@
 <?php
-require('database.php');
+require_once('database.php');
 
 $query = 'SELECT *
-          FROM Game
-          ORDER BY GameID';
+          FROM Beta_Tester
+          ORDER BY PlayerID';
 
 $statement = $db->prepare($query);
 $statement->execute();
-$games = $statement->fetchAll();
+$players = $statement->fetchAll();
 $statement->closeCursor();
 ?>
+
 <!DOCTYPE html>
 <html>
-
 <!-- the head section -->
 <head>
     <title>Game Manager</title>
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
-
 <!-- the body section -->
 <body>
-    <header><h1>Game Manager</h1></header>
+    <header>
+        <h1>Game Manager</h1>
+    </header>
 
     <main>
         <h1>Add Game</h1>
-        <form action="add_product.php" method="post" id="add_product_form">
+        <form action="add_player.php" method="post" id="add_player_form">
             <label>Add game to Player:</label>
             <select name="player_id">
-            <?php foreach($beta_tester as $betaP) : ?>
-                <option value="<?php echo $betaP['PlayerID']; ?>">
-                <?php echo $player['PlayerFname'].''.['PlayerLname']; ?>
-            </option>
-            <?php endforeach;?>
+                <?php foreach($players as $player) : ?>
+                    <option value="<?php echo $player['PlayerID']; ?>">
+                        <?php echo $player['PlayerFname'].' '.$player['PlayerLname']; ?>
+                    </option>
+                <?php endforeach; ?>
             </select><br>     
 
             <label>Game ID:</label>
