@@ -1,27 +1,37 @@
 <?php
-// Get the game data
-$gameID = filter_input(INPUT_POST, 'game_id', FILTER_VALIDATE_INT);
+require_once('database.php');
+
+$query = 'SELECT *
+          FROM Game
+          ORDER BY GameID';
+
+$statement = $db->prepare($query);
+$statement->execute();
+$games = $statement->fetchAll();
+$statement->closeCursor();
+
+// Get the player and game data
 $playerFname = filter_input(INPUT_POST, 'player_fname');
 $playerLname = filter_input(INPUT_POST, 'player_lname');
 $street1 = filter_input(INPUT_POST, 'street1');
 $street2 = filter_input(INPUT_POST, 'street2');
 $zipCode = filter_input(INPUT_POST, 'zip_code');
 $state = filter_input(INPUT_POST, 'state');
+$gameID = filter_input(INPUT_POST, 'game_id', FILTER_VALIDATE_INT);
 
 // Validate inputs
 if (
-    $gameID == null ||
     $playerFname == null ||
     $playerLname == null ||
     $street1 == null ||
     $zipCode == null ||
-    $state == null
+    $state == null ||
+    $gameID === null || 
+    $gameID === false
 ) {
-    $error = "Invalid player data. Check all fields and try again.";
+    $error = "Invalid player or game data. Check all fields and try again.";
     include('error.php');
 } else {
-    require_once('database.php');
-
     // Add the player to the database
     $query = 'INSERT INTO Beta_Tester (PlayerFname, PlayerLname, Street1, Street2, ZipCode, State)
               VALUES (:player_fname, :player_lname, :street1, :street2, :zip_code, :state)';
@@ -38,8 +48,8 @@ if (
     // Get the newly added player's ID
     $playerID = $db->lastInsertId();
 
-    // Add the player's payment for the game
-    $query = 'INSERT INTO Payment (PlayerID, GameID)
+    // Add the player to the game
+    $query = 'INSERT INTO Player_Game (PlayerID, GameID)
               VALUES (:player_id, :game_id)';
     $statement = $db->prepare($query);
     $statement->bindValue(':player_id', $playerID);
@@ -47,7 +57,7 @@ if (
     $statement->execute();
     $statement->closeCursor();
 
-    // Redirect to the game details page
-    header("Location: game_details.php?game_id=$gameID");
+    // Redirect to a success page or desired location
+    header("Location: player_added_to_game.php");
 }
 ?>
