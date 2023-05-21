@@ -98,6 +98,13 @@ if(isset($_GET['game_id'])){
                         <td><?php echo $player['Street2']; ?></td>
                         <td><?php echo $player['ZipCode']; ?></td>
                         <td><?php echo $player['State']; ?></td>
+                        <td>
+                        <form action="delete_player.php" method="post">
+                        <input type="hidden" name="player_id"
+                            value="<?php echo $player['PlayerID']; ?>">
+                        <input type="submit" value="Delete">
+                    </form>
+                </td>
                     </tr>
                 <?php endforeach; ?>
             </table>
