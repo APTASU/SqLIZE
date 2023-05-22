@@ -11,13 +11,11 @@ $statement->closeCursor();
 ?>
 <!DOCTYPE html>
 <html>
-
 <!-- the head section -->
 <head>
     <title>My Game Shop</title>
     <link rel="stylesheet" type="text/css" href="main.css" />
 </head>
-
 <!-- the body section -->
 <body>
 <header><h1>Game Manager</h1></header>
@@ -37,36 +35,32 @@ $statement->closeCursor();
             <td><?php echo $game['GameCost']; ?></td>
             <td>
                 <form action="delete_game.php" method="post">
-                    <input type="hidden" name="game_id"
-                           value="<?php echo $game['GameID']; ?>"/>
+                    <input type="hidden" name="game_id" value="<?php echo $game['GameID']; ?>"/>
                     <input type="submit" value="Delete"/>
                 </form>
             </td>
         </tr>
         <?php endforeach; ?>    
     </table>
+<h2 class="margin_top_increase">Add Game</h2>
+<form action="add_game.php" method="post" id="add_game_form">
 
-    <h2 class="margin_top_increase">Add Game</h2>
-    <form action="add_game.php" method="post"
-          id="add_game_form">
+    <label>Name:</label>
+    <input type="text" name="game_name"/>
+    <br>
 
-        <label>Name:</label>
-        <input type="text" name="name" />
-        <br>
+    <label>Date Released:</label>
+    <input type="text" name="date_released"/>
+    <br>
 
-        <label>Date Released:</label>
-        <input type="text" name="date_released" />
-        <br>
+    <label>Cost:</label>
+    <input type="text" name="cost"/>
+    <br>
 
-        <label>Cost:</label>
-        <input type="text" name="cost" />
-        <br>
+    <input id="add_game_button" type="submit" value="Add"/>
+</form>
 
-        <input id="add_game_button" type="submit" value="Add"/>
-    </form>
-    
-    <p><a href="index.php">List Products</a></p>
-
+<p><a href="index.php">List Products</a></p>
 </main>
 <footer>
     <p>&copy; <?php echo date("Y"); ?> My Game Shop, Inc.</p>
