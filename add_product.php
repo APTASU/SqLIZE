@@ -10,21 +10,19 @@ $street2 = filter_input(INPUT_POST, 'street2');
 $zip_code = filter_input(INPUT_POST, 'zip_code');
 $state = filter_input(INPUT_POST, 'state');
 
-
 // Validate inputs
 if (
     $game_id === null || 
-    $player_fname == null ||
-    $player_lname == null ||
-    $street1 == null ||
-    $zip_code == null ||
-    $state == null 
+    $player_fname === null ||
+    $player_lname === null ||
+    $street1 === null ||
+    $zip_code === null ||
+    $state === null 
 ) {
     $error = "Invalid player or game data. Check all fields and try again.";
     include('error.php');
 } else {
     // Add the player to the database
-
     $query = 'INSERT INTO Beta_Tester (PlayerFname, PlayerLname, Street1, Street2, ZipCode, State)
               VALUES (:player_fname, :player_lname, :street1, :street2, :zip_code, :state)';
     $statement = $db->prepare($query);
@@ -41,8 +39,8 @@ if (
 
     $query =  'INSERT INTO Payment (PlayerID, GameID)
                VALUES (:player_id, :game_id)';
-    $statement = $db->prepare($query);           
-    $statement->bindValue(':player_id', $player_id);
+    $statement = $db->prepare($query);
+    $statement->bindValue(':player_id', $playerID);
     $statement->bindValue(':game_id', $game_id);
     $statement->execute();
     $statement->closeCursor();
