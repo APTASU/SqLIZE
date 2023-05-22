@@ -1,6 +1,6 @@
 <?php
 require('database.php');
-$player_id = filter_input(INPUT_POST, 'player_id', FILTER_VALIDATE_INT);
+$playerID = filter_input(INPUT_POST, 'player_id', FILTER_VALIDATE_INT);
 $query = 'SELECT *
           FROM Beta_Tester
           ORDER BY PlayerID';
@@ -11,7 +11,7 @@ $statement->closeCursor();
 
 $query2 = 'SELECT * FROM Beta_Tester WHERE PlayerID = :player_id';
 $statement = $db->prepare($query2);
-$statement->bindValue(':player_id', $player_id);
+$statement->bindValue(':player_id', $playerID);
 $statement->execute();
 $player = $statement->fetch();
 $statement->closeCursor();
@@ -31,11 +31,10 @@ $statement->closeCursor();
 
     <main>
         <h1>Edit Player</h1>
-        <form action="add_edit_player.php" method="post"
-              id="edit_player_form">
+        <form action="add_edit_player.php" method="post" id="edit_player_form">
 
             <label>Player ID:</label>
-            <input value="<?php echo $player['PlayerID']; ?>" type="text" name="player_id" readonly><br>
+            <input value="<?php echo $player['PlayerID']; ?>" readonly type="text" name="player_id"><br>
 
             <label>First Name:</label>
             <input value="<?php echo $player['PlayerFname']; ?>" type="text" name="player_fname"><br>
