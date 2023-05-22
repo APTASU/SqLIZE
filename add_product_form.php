@@ -25,34 +25,34 @@ $statement->closeCursor();
 
     <main>
         <h1>Add Player to Game</h1>
-        <form action="add_player.php" method="post" id="Add Player">
-            <label>Select a Game:</label>
-            <select name="game_id">
+        <form action="add_player.php" method="post" id="Add_Player_Form">
+            <label for="game_id">Select a Game:</label>
+            <select name="game_id" id="game_id">
                 <?php foreach($games as $game) : ?>
                     <option value="<?php echo $game['GameID']; ?>">
                         <?php echo $game['Gamename']; ?>
                     </option>
                 <?php endforeach; ?>
-            </select><br>     
-            <label>Player First Name:</label>
-            <input type="text" name="player_fname"><br>
+            </select><br>
 
-            <label>Player Last Name:</label>
-            <input type="text" name="player_lname"><br>
+            <label for="player_fname">Player First Name:</label>
+            <input type="text" name="player_fname" id="player_fname"><br>
 
-            <label>Street 1:</label>
-            <input type="text" name="street1"><br>
+            <label for="player_lname">Player Last Name:</label>
+            <input type="text" name="player_lname" id="player_lname"><br>
 
-            <label>Street 2:</label>
-            <input type="text" name="street2"><br>
+            <label for="street1">Street 1:</label>
+            <input type="text" name="street1" id="street1"><br>
 
-            <label>Zip Code:</label>
-            <input type="text" name="zip_code"><br>
+            <label for="street2">Street 2:</label>
+            <input type="text" name="street2" id="street2"><br>
 
-            <label>State:</label>
-            <input type="text" name="state"><br>
+            <label for="zip_code">Zip Code:</label>
+            <input type="text" name="zip_code" id="zip_code"><br>
 
-            <label>&nbsp;</label>
+            <label for="state">State:</label>
+            <input type="text" name="state" id="state"><br>
+
             <input type="submit" value="Add Player"><br>
         </form>
         <p><a href="index.php">View Game List</a></p>
