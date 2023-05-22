@@ -46,6 +46,7 @@ if (
     $statement->execute();
     $statement->closeCursor();
 
-    include('player_list.php');
+    header("Location: index.php"); // Added a redirect to the index page
+    exit; // Added an exit statement to stop further execution
 }
 ?>
